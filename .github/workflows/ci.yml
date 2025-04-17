@@ -2,13 +2,10 @@ name: CI
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *" # Adjust the cron schedule as needed
 
 jobs:
   regression:
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
