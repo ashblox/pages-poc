@@ -1,0 +1,22 @@
+{
+  "name": "pages-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashblox/pages-poc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashblox/pages-poc/issues"
+  },
+  "homepage": "https://github.com/ashblox/pages-poc#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  }
+}
