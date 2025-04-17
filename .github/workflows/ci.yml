@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Adjust the cron schedule as needed
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # Adjust the Node.js version as needed
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: regression
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create public directory
+        run: mkdir -p public/gouda
+
+      - name: Copy test results
+        run: cp -R playwright-report/* public/gouda/
+
+      - name: Upload public directory
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: gouda
+          path: public
+          retention-days: 5
